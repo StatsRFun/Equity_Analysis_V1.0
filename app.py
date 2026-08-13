@@ -5,6 +5,52 @@ import statsmodels.api as sm
 import streamlit as st
 import yfinance as yf
 
+import os
+from google import genai
+
+def get_gemini_api_key():
+  """Checks Streamlit secrets, Colab userdata, or OS environment variables for GEMINI_API_KEY."""
+  # 1. Try Streamlit Secrets (for Streamlit Cloud)
+  if "GEMINI_API_KEY" in st.secrets:
+    return st.secrets["GEMINI_API_KEY"]
+
+  # 2. Try Google Colab Userdata (if running inside Colab)
+  try:
+    from google.colab import userdata
+
+    return userdata.get("GEMINI_API_KEY")
+  except ImportError:
+    pass
+
+  # 3. Fallback to standard environment variable
+  return os.environ.get("GEMINI_API_KEY")
+
+
+def fetch_equity_news_summary(stock_ticker):
+  """Uses Gemini 2.5 Flash to generate a short, up-to-date financial context/news summary for the ticker."""
+  api_key = get_gemini_api_key()
+
+  if not api_key:
+    return "⚠️ *GEMINI_API_KEY missing. Add GEMINI_API_KEY to your Streamlit secrets or environment variables to enable news context.*"
+
+  try:
+    client = genai.Client(api_key=api_key)
+
+    prompt = f"""
+        Provide a concise, 1-paragraph (3-4 sentences max) overview of recent major news, financial catalysts, 
+        or business developments driving the stock performance for ticker symbol '{stock_ticker}'. 
+        Keep the tone professional, objective, and financial-focused.
+        """
+
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt,
+    )
+
+    return response.text
+  except Exception as e:
+    return f"Unable to fetch news summary for {stock_ticker}. Error: {e}"
+
 # --- Page Configuration ---
 st.set_page_config(
     page_title="CAPM Beta Analyzer", page_icon="📈", layout="wide"
@@ -60,7 +106,15 @@ if st.button("Run Analysis", type="primary"):
       col3.metric("Correlation (r)", f"{r:.4f}")
       col4.metric("p-value", f"{p_value:.4e}")
 
-      # --- DYNAMIC EXECUTIVE SUMMARY ---
+      # --- RECENT NEWS & CONTEXT BLOCK ---
+      st.markdown(f"### 📰 Financial Context & News: {stock_ticker}")
+      with st.spinner(f"Fetching news context for {stock_ticker}..."):
+        news_summary = fetch_equity_news_summary(stock_ticker)
+        st.write(news_summary)
+        
+        
+        
+        # --- DYNAMIC EXECUTIVE SUMMARY ---
       if beta_1 > 1.2:
         volatility_type = (
             "high-beta / aggressive stock (significantly higher market"
