@@ -27,7 +27,7 @@ def get_gemini_api_key():
 
 
 def fetch_equity_news_summary(stock_ticker):
-  """Uses Gemini 2.5 Flash to generate a short, up-to-date financial context/news summary for the ticker."""
+  """Uses Gemini 2.0 Flash to generate a short, up-to-date financial context/news summary for the ticker."""
   api_key = get_gemini_api_key()
 
   if not api_key:
@@ -43,7 +43,7 @@ def fetch_equity_news_summary(stock_ticker):
         """
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="gemini-2.0-flash",
         contents=prompt,
     )
 
