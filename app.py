@@ -57,32 +57,8 @@ st.set_page_config(
 )
 
 st.title("📈 Stock Beta & CAPM Regression Analyzer")
-# --- TOP LIVE QUOTE DISPLAY ---
-try:
-  ticker_obj = yf.Ticker(stock_ticker)
-  fast_info = ticker_obj.fast_info
 
-  # Extract live metric details
-  current_price = fast_info["last_price"]
-  prev_close = fast_info["previous_close"]
-  price_change = current_price - prev_close
-  pct_change = (price_change / prev_close) * 100
 
-  # Display at top using Streamlit metrics
-  st.subheader(f"📌 Current Market Quote: {stock_ticker}")
-  m_col1, m_col2, m_col3 = st.columns(3)
-
-  m_col1.metric("Current Price", f"${current_price:.2f}")
-  m_col2.metric("Day Change ($)", f"${price_change:+.2f}")
-  m_col3.metric(
-      "Day Change (%)",
-      f"{pct_change:+.2f}%",
-      delta=f"{pct_change:+.2f}%",  # Adds automatic green/red arrow
-  )
-  st.divider()
-
-except Exception:
-  st.warning(f"Could not load live stock quote for {stock_ticker}.")
 
 
 
