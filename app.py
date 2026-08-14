@@ -78,6 +78,7 @@ if st.button("Run Analysis", type="primary"):
       df_prices = yf.download(tickers, period="61mo", interval="1mo")[
           "Close"
       ].dropna()
+      current_price = stock_ticker.fast_info["lastPrice"]
 
       # 2. Calculate Monthly Percentage Returns
       df_returns = df_prices.pct_change().dropna().tail(60)
