@@ -91,6 +91,8 @@ if st.button("Run Analysis", type="primary"):
       # Calculate Summary Stats
       X_mean, X_std = X.mean(), X.std()
       Y_mean, Y_std = Y.mean(), Y.std()
+      X_upper, X_lower = X_mean + 2 * X_std
+      Y_upper, Y_lower = Y_mean + 2 * Y_std
 
       # 3. Fit OLS Regression
       X_with_const = sm.add_constant(X)
@@ -217,7 +219,7 @@ if st.button("Run Analysis", type="primary"):
         excel_buffer.close()
 
       with tab3:
-        fig, ax = plt.subplots(figsize=(8, 4.5))
+        fig, ax = plt.subplots(figsize=(12, 6))
         ax.plot(dates, Y, label=f"{stock_ticker} Returns")
         ax.plot(dates, X, label=f"{market_ticker} Returns")
         ax.set_title("Monthly Returns Over Time")
