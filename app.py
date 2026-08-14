@@ -59,8 +59,6 @@ st.set_page_config(
 
 st.title("📈 Stock Beta & CAPM Regression Analyzer")
 
-
-
 st.markdown(
     "Enter any equity ticker symbol below to analyze its 60-month risk/return"
     " profile against the **S&P 500 (^GSPC)**."
@@ -120,7 +118,7 @@ if st.button("Run Analysis", type="primary"):
       col4.metric("p-value", f"{p_value:.4e}")
 
       # --- RECENT NEWS & CONTEXT BLOCK ---
-      st.markdown(f"### 📰 Financial Context & News: {stock_ticker}")
+      st.markdown(f"### 📰 Financial Context & News: {stock_ticker}: ${current_price:.2f} {pct_ch:.2f}%)"
       with st.spinner(f"Fetching news context for {stock_ticker}..."):
         news_summary = fetch_equity_news_summary(stock_ticker)
         st.write(news_summary)
