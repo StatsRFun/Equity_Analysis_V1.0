@@ -92,8 +92,8 @@ if st.button("Run Analysis", type="primary"):
       # Calculate Summary Stats
       X_mean, X_std = X.mean(), X.std()
       Y_mean, Y_std = Y.mean(), Y.std()
-      X_upper, X_lower = X_mean + 2 * X_std
-      Y_upper, Y_lower = Y_mean + 2 * Y_std
+      X_upper, X_lower = X_mean + 2 * X_std, X_mean - 2 * X_std
+      Y_upper, Y_lower = Y_mean + 2 * Y_std, Y_mean - 2 * Y_std
 
       # 3. Fit OLS Regression
       X_with_const = sm.add_constant(X)
