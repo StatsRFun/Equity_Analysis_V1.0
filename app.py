@@ -80,6 +80,8 @@ if st.button("Run Analysis", type="primary"):
       ].dropna()
       ticker_obj = yf.Ticker(stock_ticker)
       current_price = ticker_obj.fast_info["lastPrice"]
+      prev_price = ticker_obj.fast_info["previousClose"]
+      pct_ch = ((current_price - prev_price) / prev_price) * 100
 
       # 2. Calculate Monthly Percentage Returns
       df_returns = df_prices.pct_change().dropna().tail(60)
