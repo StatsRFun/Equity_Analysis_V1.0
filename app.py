@@ -118,7 +118,7 @@ if st.button("Run Analysis", type="primary"):
       col4.metric("p-value", f"{p_value:.4e}")
 
       # --- RECENT NEWS & CONTEXT BLOCK ---
-      st.markdown(f"### 📰 Financial Context & News: {stock_ticker}: ${current_price:.2f})"
+      st.markdown(f"### 📰 Financial Context & News: {stock_ticker}: ${current_price:.2f}")
       with st.spinner(f"Fetching news context for {stock_ticker}..."):
         news_summary = fetch_equity_news_summary(stock_ticker)
         st.write(news_summary)
