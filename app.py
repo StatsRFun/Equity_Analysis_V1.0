@@ -161,7 +161,7 @@ if st.button("Run Analysis", type="primary"):
             """)
 
       # --- VISUALIZATION & DATA TABLE ---
-      tab1, tab2 = st.tabs(["📉 Scatter & Regression Plot", "📋 Return Data"])
+      tab1, tab2, tab3 = st.tabs(["📉 Scatter & Regression Plot", "📋 Return Data", "📉 Returns Plot"])
 
       with tab1:
         fig, ax = plt.subplots(figsize=(8, 4.5))
