@@ -216,6 +216,40 @@ if st.button("Run Analysis", type="primary"):
         df_excel.to_excel(excel_buffer, index=False)
         excel_buffer.close()
 
+      with tab3:
+        fig, ax = plt.subplots(figsize=(8, 4.5))
+        ax.scatter(
+            X * 100,
+            Y * 100,
+            alpha=0.7,
+            color="navy",
+            label=f"Monthly Returns ({stock_ticker})",
+        )
+        x_vals = np.linspace(X.min(), X.max(), 100)
+        y_vals = (beta_0 + beta_1 * x_vals) * 100
+        ax.plot(
+            x_vals * 100,
+            y_vals,
+            color="red",
+            linewidth=2,
+            label=f"Regression Line (Beta = {beta_1:.2f})",
+        )
+        ax.set_title(
+            f"CAPM Beta Regression: {stock_ticker} vs. S&P 500 (Last 60"
+            " Months)",
+            fontweight="bold",
+        )
+        ax.set_xlabel("S&P 500 Monthly Return (%)")
+        ax.set_ylabel(f"{stock_ticker} Monthly Return (%)")
+        ax.axhline(0, color="gray", linestyle="--", linewidth=0.8)
+        ax.axvline(0, color="gray", linestyle="--", linewidth=0.8)
+        ax.grid(True, linestyle=":", alpha=0.6)
+        ax.legend()
+        st.pyplot(fig)
+
+
+        
+
         with open("equity_datafile.xlsx", "rb") as f:
           st.download_button(
               label="📥 Download Excel Dataset",
