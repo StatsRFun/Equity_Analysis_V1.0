@@ -89,7 +89,7 @@ if st.button("Run Analysis", type="primary"):
       Y = df_returns[stock_ticker]
 
       # Extract Dates
-      dates = df_retruns.index
+      dates = df_returns.index
 
       # Calculate Summary Stats
       X_mean, X_std = X.mean(), X.std()
