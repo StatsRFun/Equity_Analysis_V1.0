@@ -225,6 +225,9 @@ if st.button("Run Analysis", type="primary"):
         ax.plot(dates, X, label=f"{market_ticker} Returns", color="darkblue", linewidth=1.5)
         ax.axhline(y=X_upper, color="darkblue", linestyle="--")
         ax.axhline(y=X_lower, color="darkblue", linestyle="--")
+        ax.axhline(y=Y_upper, color="darkorange", linestyle="--")
+        ax.axhline(y=Y_lower, color="darkorange", linestyle="--")
+       
         ax.set_title("Monthly Returns Over Time")
         ax.set_ylabel("Returns")
         ax.legend()
