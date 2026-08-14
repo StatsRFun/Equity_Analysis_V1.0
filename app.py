@@ -60,9 +60,6 @@ st.title("📈 Stock Beta & CAPM Regression Analyzer")
 
 
 
-
-
-
 st.markdown(
     "Enter any equity ticker symbol below to analyze its 60-month risk/return"
     " profile against the **S&P 500 (^GSPC)**."
@@ -221,33 +218,12 @@ if st.button("Run Analysis", type="primary"):
 
       with tab3:
         fig, ax = plt.subplots(figsize=(8, 4.5))
-        ax.scatter(
-            X * 100,
-            Y * 100,
-            alpha=0.7,
-            color="navy",
-            label=f"Monthly Returns ({stock_ticker})",
-        )
-        x_vals = np.linspace(X.min(), X.max(), 100)
-        y_vals = (beta_0 + beta_1 * x_vals) * 100
-        ax.plot(
-            x_vals * 100,
-            y_vals,
-            color="red",
-            linewidth=2,
-            label=f"Regression Line (Beta = {beta_1:.2f})",
-        )
-        ax.set_title(
-            f"CAPM Beta Regression: {stock_ticker} vs. S&P 500 (Last 60"
-            " Months)",
-            fontweight="bold",
-        )
-        ax.set_xlabel("S&P 500 Monthly Return (%)")
-        ax.set_ylabel(f"{stock_ticker} Monthly Return (%)")
-        ax.axhline(0, color="gray", linestyle="--", linewidth=0.8)
-        ax.axvline(0, color="gray", linestyle="--", linewidth=0.8)
-        ax.grid(True, linestyle=":", alpha=0.6)
+        ax.plot(dates, Y, label=f"{stock_ticker} Returns")
+        ax.plot(dates, X, label=f"{market_ticker} Returns")
+        ax.set_title("Monthly Returns Over Time")
+        ax.set_ylabel("Returns")
         ax.legend()
+       
         st.pyplot(fig)
 
 
