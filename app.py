@@ -221,9 +221,10 @@ if st.button("Run Analysis", type="primary"):
 
       with tab3:
         fig, ax = plt.subplots(figsize=(12, 6))
-        ax.plot(dates, Y, label=f"{stock_ticker} Returns")
+        ax.plot(dates, Y, label=f"{stock_ticker} Returns", color="darkorange", linewidth=1.5)
         ax.plot(dates, X, label=f"{market_ticker} Returns", color="darkblue", linewidth=1.5)
         ax.axhline(y=X_upper, color="darkblue", linestyle="--")
+        ax.axhline(y=X_lower, color="darkblue", linestyle="--")
         ax.set_title("Monthly Returns Over Time")
         ax.set_ylabel("Returns")
         ax.legend()
